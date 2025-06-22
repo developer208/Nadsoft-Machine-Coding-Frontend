@@ -82,10 +82,10 @@ const CustomEditModel = ({
     if (isSuccess) {
       console.log("Resetting with:", studentData.data);
       reset({
-        email: studentData.data.email || "",
-        name: studentData.data.name || "",
-        age: studentData.data.age || "",
-        subjects: studentData.data.subjects,
+        email: studentData?.data?.email || "",
+        name: studentData?.data?.name || "",
+        age: studentData?.data?.age || "",
+        subjects: studentData?.data?.subjects,
       });
       subjectRefetch();
     }
