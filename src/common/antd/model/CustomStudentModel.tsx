@@ -54,7 +54,6 @@ const CustomStudentModel = ({
   }, [state]);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const response = await addStudent({ ...data }).unwrap();
     if (response?.status) {
       onCancel();

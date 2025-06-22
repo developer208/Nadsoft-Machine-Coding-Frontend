@@ -18,7 +18,6 @@ export function UserDeleteButton(props: any) {
   return (
     <button
       onClick={() => {
-        console.log(props.data);
         props.func(props.data);
       }}
       className="hover:text-purple-600 cursor-pointer "

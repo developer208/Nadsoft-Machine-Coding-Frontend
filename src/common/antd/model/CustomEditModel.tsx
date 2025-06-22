@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import * as yup from "yup";
@@ -34,11 +34,14 @@ const CustomEditModel = ({
   const [updateStudent] = useUpdateStudentMutation();
   const { data: subjects, refetch: subjectRefetch } = useSubjectsQuery();
   const { data: studentData, isSuccess } = useFindByIdQuery(id);
+  const [subOption, setSubOption] = useState([]);
 
   const {
     control,
     handleSubmit,
     reset,
+    watch,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(
@@ -73,6 +76,12 @@ const CustomEditModel = ({
     },
   });
 
+  useEffect(() => {
+    let ids = getValues("subjects")?.map((item) => item?.subjectName);
+
+    setSubOption(subjects?.data?.filter((i: any) => !ids?.includes(i.value)));
+  }, [watch("subjects"), studentData?.data?.subjects]);
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "subjects", // must match defaultValues
@@ -80,7 +89,6 @@ const CustomEditModel = ({
 
   useEffect(() => {
     if (isSuccess) {
-      console.log("Resetting with:", studentData.data);
       reset({
         email: studentData?.data?.email || "",
         name: studentData?.data?.name || "",
@@ -96,7 +104,6 @@ const CustomEditModel = ({
   }, [isSuccess, studentData, reset]);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const response = await updateStudent({
       id,
       body: data,
@@ -108,8 +115,6 @@ const CustomEditModel = ({
       toastFn("error", response?.message);
     }
   };
-
-  console.log(errors);
 
   return (
     <Modal
@@ -204,7 +209,7 @@ const CustomEditModel = ({
                             placeholder="Select Subject"
                             className="w-[150px]"
                             onChange={onChange}
-                            options={subjects?.data}
+                            options={subOption}
                           />
                           {errors?.subjects?.[index]?.subjectName && (
                             <CustomError

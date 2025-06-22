@@ -23,13 +23,10 @@ function App() {
   const [record, setRecord] = useState(null);
 
   const handleDelete = (props: any) => {
-    // delMutation.mutate(props.rollNo);
-    console.log("Clicked");
     setDeleteModelState(true);
     setRecord(props);
   };
   const handleEdit = (props: any) => {
-    // router.push(`/admin/dashboard/users/editUser/${props.rollNo}`);
     setRecord(props?.id);
     setEditModelState(true);
   };

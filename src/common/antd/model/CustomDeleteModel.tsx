@@ -38,7 +38,6 @@ const CustomeDeleteModel = ({
             className=" bg-blue-300 px-4 py-2 cursor-pointer rounded-lg  "
             onClick={async () => {
               const response = await deleteStudent(data?.id).unwrap();
-              console.log(response);
               if (response?.status) {
                 refetchFn();
                 onCancel();
