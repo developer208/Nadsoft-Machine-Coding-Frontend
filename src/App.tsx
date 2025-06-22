@@ -19,7 +19,7 @@ function App() {
   const [editModelState, setEditModelState] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
-  const { data, loading, refetch } = useStudentsQuery({ page, limit });
+  const { data, refetch } = useStudentsQuery({ page, limit });
   const [record, setRecord] = useState(null);
 
   const handleDelete = (props: any) => {

@@ -33,18 +33,12 @@ const CustomEditModel = ({
 }: modelProps) => {
   const [updateStudent] = useUpdateStudentMutation();
   const { data: subjects, refetch: subjectRefetch } = useSubjectsQuery();
-  const {
-    data: studentData,
-    loading,
-    refetch,
-    isSuccess,
-  } = useFindByIdQuery(id);
+  const { data: studentData, isSuccess } = useFindByIdQuery(id);
 
   const {
     control,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(
@@ -75,7 +69,7 @@ const CustomEditModel = ({
       email: "",
       name: "",
       age: undefined,
-      subjects: [{ subjectName: "", marks: "" }],
+      subjects: [{ subjectName: "", marks: 0 }],
     },
   });
 
@@ -266,7 +260,7 @@ const CustomEditModel = ({
           <div
             className="flex gap-1 items-center bg-slate-200 px-2 py-1  w-fit rounded-lg cursor-pointer "
             onClick={() => {
-              append({ subjectName: "", marks: "" });
+              append({ subjectName: "", marks: 0 });
             }}
           >
             Add
